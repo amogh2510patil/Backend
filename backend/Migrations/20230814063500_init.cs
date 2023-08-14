@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -30,11 +31,41 @@ namespace backend.Migrations
                 {
                     table.PrimaryKey("PK_customer", x => x.accountnum);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "transaction",
+                columns: table => new
+                {
+                    transactionNo = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    amount = table.Column<int>(type: "int", nullable: true),
+                    type = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    dateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    accountnum = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_transaction", x => x.transactionNo);
+                    table.ForeignKey(
+                        name: "FK_transaction_customer_accountnum",
+                        column: x => x.accountnum,
+                        principalTable: "customer",
+                        principalColumn: "accountnum",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_transaction_accountnum",
+                table: "transaction",
+                column: "accountnum");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "transaction");
+
             migrationBuilder.DropTable(
                 name: "customer");
         }

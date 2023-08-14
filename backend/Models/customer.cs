@@ -28,5 +28,7 @@ namespace backend.Models
         [Required]
         public int balance { get; set; }
 
+        //public virtual List<transaction>? transactions { get; set; }
+
     }
 }
