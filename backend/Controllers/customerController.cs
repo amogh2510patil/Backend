@@ -35,11 +35,8 @@ namespace backend.Controllers
         public customer Getcustomer(int accNo)
         {
 
-            var cus = _customerDbContext.customer.Find(accNo);
             
-            
-            return cus;
-            //return _customerRepo.GetCustomer(accNo);
+            return _customerRepo.GetCustomer(accNo);
 
         }
 

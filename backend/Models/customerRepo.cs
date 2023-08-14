@@ -9,7 +9,7 @@ namespace backend.Models
             List<customer> GetAll();
             bool DeleteCustomer(int accNo);
             int InsertCustomer(customer customer);
-            int UpdateCustomer(customer customer);
+            customer UpdateCustomer(customer customer);
         }
 
     public class customerRepo : ICustomer
@@ -73,13 +73,13 @@ namespace backend.Models
 
         }
 
-        public int UpdateCustomer(customer customerup)
+        public customer UpdateCustomer(customer customerup)
         {
             //using (var db = new customerDbContext())
             {
                 db.Entry(customerup).State = EntityState.Modified;
                 db.SaveChangesAsync();
-                return 1;
+                return customerup;
             }
         }
     }
