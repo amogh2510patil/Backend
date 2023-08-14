@@ -4,6 +4,7 @@ namespace backend.Models
 {
     public class customer
     {
+        
         [Required]
         public string name { get; set; }
         [Required]

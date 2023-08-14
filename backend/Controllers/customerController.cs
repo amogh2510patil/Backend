@@ -10,17 +10,36 @@ namespace backend.Controllers
     public class customerController : ControllerBase
     {
         private readonly customerDbContext _customerDbContext;
+        private customerRepo _customerRepo; // = new customerRepo(_customerDbContext);
+        
 
         public customerController(customerDbContext customerDbContext)
         {
             _customerDbContext = customerDbContext;
+            _customerRepo = new customerRepo(new customerDbContext());  
+        }
+
+
+
+        [HttpGet]
+        [Route("GetAll")]
+        public async Task<IEnumerable<customer>> GetAll()
+        {
+
+            return _customerRepo.GetAll();
+
         }
 
         [HttpGet]
-        [Route("Getcustomer")]
-        public async Task<IEnumerable<customer>> Getcustomer()
+        [Route("Getcustomer/{accNo}")]
+        public customer Getcustomer(int accNo)
         {
-            return await _customerDbContext.customer.ToListAsync();
+
+            var cus = _customerDbContext.customer.Find(accNo);
+            
+            
+            return cus;
+            //return _customerRepo.GetCustomer(accNo);
 
         }
 
@@ -28,8 +47,9 @@ namespace backend.Controllers
         [Route("Addcustomer")]
         public async Task<customer> Addstudent(customer objcustomer)
         {
-            _customerDbContext.customer.Add(objcustomer);
-            await _customerDbContext.SaveChangesAsync();
+            //_customerDbContext.customer.Add(objcustomer);
+            //await _customerDbContext.SaveChangesAsync();
+            _customerRepo.InsertCustomer(objcustomer);
             return objcustomer;
         }
 
@@ -37,15 +57,19 @@ namespace backend.Controllers
         [Route("Updatecustomer/{accountnum}")]
         public async Task<customer> Updatecustomer(customer objcustomer)
         {
-            _customerDbContext.Entry(objcustomer).State = EntityState.Modified;
-            await _customerDbContext.SaveChangesAsync();
+            _customerRepo.UpdateCustomer(objcustomer);
             return objcustomer;
+            //_customerDbContext.Entry(objcustomer).State = EntityState.Modified;
+            //await _customerDbContext.SaveChangesAsync();
+            //return objcustomer;
         }
 
         [HttpDelete]
         [Route("Deletecustomer/{accountnum}")]
         public bool Deletecustomer(int accountnum)
         {
+            return _customerRepo.DeleteCustomer(accountnum);
+
             bool a = false;
             var customer = _customerDbContext.customer.Find(accountnum);
             if (customer != null)

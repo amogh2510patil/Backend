@@ -4,6 +4,9 @@ namespace backend.Models
 {
     public class customerDbContext : DbContext
     {
+        public customerDbContext()
+        {
+        }
 
         public customerDbContext(DbContextOptions<customerDbContext> options) : base(options)
         {
@@ -13,7 +16,7 @@ namespace backend.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source=WINDOWS-BVQNF6J;Initial Catalog=atm; User Id=bankingapp; password=0103; Integrated Security = True; TrustServerCertificate=True");        
+            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=EFCore;Trusted_Connection=True;");        
         }
 
     }
