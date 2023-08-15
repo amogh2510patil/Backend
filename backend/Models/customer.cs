@@ -10,12 +10,15 @@ namespace backend.Models
         [Required]
         public string address { get; set; }
         [Required]
+        [EmailAddress]
         public string email { get; set; }
         [Required]
+        [Phone]
         public string contact { get; set; }
         [Required]
         public int cardnumber { get; set; }
         [Required]
+        [Range(0,9999)]
         public int pinnum { get; set; }
         [Required]
         public string city { get; set; }
