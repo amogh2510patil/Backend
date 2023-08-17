@@ -41,7 +41,8 @@ namespace backend.Migrations
                     amount = table.Column<int>(type: "int", nullable: false),
                     type = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     dateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    accountnum = table.Column<int>(type: "int", nullable: false)
+                    accountnum = table.Column<int>(type: "int", nullable: false),
+                    recipient = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {

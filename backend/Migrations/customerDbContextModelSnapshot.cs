@@ -84,6 +84,9 @@ namespace backend.Migrations
                     b.Property<DateTime>("dateTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("recipient")
+                        .HasColumnType("int");
+
                     b.Property<string>("type")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");

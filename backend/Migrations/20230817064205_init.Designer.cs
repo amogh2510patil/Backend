@@ -12,7 +12,7 @@ using backend.Models;
 namespace backend.Migrations
 {
     [DbContext(typeof(customerDbContext))]
-    [Migration("20230817051446_init")]
+    [Migration("20230817064205_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -86,6 +86,9 @@ namespace backend.Migrations
 
                     b.Property<DateTime>("dateTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<int?>("recipient")
+                        .HasColumnType("int");
 
                     b.Property<string>("type")
                         .IsRequired()

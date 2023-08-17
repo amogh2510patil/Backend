@@ -35,7 +35,7 @@ namespace backend.Controllers
             [HttpPost]
             [Route("Addtransaction")]
         //[ProducesResponseType(StatusCodes.Status400BadRequest)]
-            public async Task<IActionResult> Addstudent(transaction objtransaction)
+            public async Task<IActionResult> Addtransaction(transaction objtransaction)
             {
             //_transactionDbContext.transaction.Add(objtransaction);
             //await _transactionDbContext.SaveChangesAsync();
@@ -47,8 +47,24 @@ namespace backend.Controllers
 
              return Ok(objtransaction);
             }
+/*
+        [HttpPost]
+        [Route("FundTransfer")]
+        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> FundTransfer(transaction objtransaction)
+        {
+            //_transactionDbContext.transaction.Add(objtransaction);
+            //await _transactionDbContext.SaveChangesAsync();
+            int validity = _transactionRepo.FundTransfer(objtransaction);
+            if (validity == 0)
+            {
+                return BadRequest();
+            }
 
-            [HttpPatch]
+            return Ok(objtransaction);
+        }*/
+
+        [HttpPatch]
             [Route("Updatetransaction/{transactionnum}")]
             public async Task<transaction> Updatetransaction(transaction objtransaction)
             {

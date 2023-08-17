@@ -24,7 +24,7 @@ namespace backend.Models
                 //using (var db = new transactionDbContext())
                 {
                 List<transaction> transactionList = new List<transaction>();
-                transactionList = db.transaction.Where(t => t.accountnum == accNo).ToList();
+                transactionList = db.transaction.Where(t => t.accountnum == accNo || t.recipient==accNo).ToList();
                 return transactionList;
             }
             }
@@ -66,7 +66,20 @@ namespace backend.Models
                 else if(transaction.type == "D")
                 {
                     customer.balance += transaction.amount;
-                }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+                }
+                else if(transaction.type == "F")
+                {
+                    customer rec = db.customer.Find(transaction.recipient);
+                        if(rec == null)
+                    {
+                        return 0;
+                    }
+                    else
+                    {
+                        customer.balance -= transaction.amount;
+                        rec.balance += transaction.amount;
+                    }
+                }
                 else { return 0; }                                                                                                                                                                                                                                                                                    
                 //transaction.customer = customer;
                     db.transaction.Add(transaction);                                                                                                                                                                                                                                                    
@@ -76,6 +89,27 @@ namespace backend.Models
                 }
 
             }
+
+        /*public int FundTransfer(transaction transaction)
+        {
+            //using (var db = new transactionDbContext())
+            {
+                customer customer = db.customer.Find(transaction.accountnum);
+                customer rec = db.customer.Find(transaction.recipient);
+                if (customer == null || rec==null)
+                {
+                    return 0;
+                }
+                transaction.type = "F";
+                customer.balance -= transaction.amount;
+                rec.balance += transaction.amount;
+                //transaction.customer = customer;
+                db.transaction.Add(transaction);
+
+                db.SaveChangesAsync();
+                return 1;
+            }
+        }*/
 
             public int Updatetransaction(transaction transactionup)
             {

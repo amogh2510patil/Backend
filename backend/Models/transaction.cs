@@ -14,6 +14,9 @@ namespace backend.Models
 
         [ForeignKey("customer")]
         public int accountnum { get; set; }
+        
+        public int? recipient { get; set; }
+
         //public virtual customer? customer { get; set; }
     }
 }
