@@ -78,7 +78,7 @@ namespace backend.Migrations
                     b.Property<int>("accountnum")
                         .HasColumnType("int");
 
-                    b.Property<int?>("amount")
+                    b.Property<int>("amount")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("dateTime")
@@ -90,20 +90,7 @@ namespace backend.Migrations
 
                     b.HasKey("transactionNo");
 
-                    b.HasIndex("accountnum");
-
                     b.ToTable("transaction");
-                });
-
-            modelBuilder.Entity("backend.Models.transaction", b =>
-                {
-                    b.HasOne("backend.Models.customer", "customer")
-                        .WithMany()
-                        .HasForeignKey("accountnum")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("customer");
                 });
 #pragma warning restore 612, 618
         }

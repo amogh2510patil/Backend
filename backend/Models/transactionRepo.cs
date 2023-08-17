@@ -55,8 +55,21 @@ namespace backend.Models
                 //using (var db = new transactionDbContext())
                 {
                 customer customer = db.customer.Find(transaction.accountnum);
-                transaction.customer = customer;
-                    db.transaction.Add(transaction);
+                if(customer == null)
+                {
+                    return 0;
+                }
+                if (transaction.type == "W")
+                {
+                    customer.balance -= transaction.amount;
+                }
+                else if(transaction.type == "D")
+                {
+                    customer.balance += transaction.amount;
+                }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+                else { return 0; }                                                                                                                                                                                                                                                                                    
+                //transaction.customer = customer;
+                    db.transaction.Add(transaction);                                                                                                                                                                                                                                                    
 
                     db.SaveChangesAsync();
                     return 1;

@@ -9,7 +9,7 @@ namespace backend.Controllers
     [Route("api/[controller]")]
     [ApiController]
 
-    [Authorize]
+    //[Authorize]
     public class customerController : ControllerBase
     {
         private readonly customerDbContext _customerDbContext;
@@ -35,6 +35,7 @@ namespace backend.Controllers
 
         [HttpGet]
         [Route("Getcustomer/{accNo}")]
+        [AllowAnonymous]
         public customer Getcustomer(int accNo)
         {
 
@@ -45,6 +46,7 @@ namespace backend.Controllers
 
         [HttpPost]
         [Route("Addcustomer")]
+        [AllowAnonymous]
         public async Task<customer> Addstudent(customer objcustomer)
         {
             //_customerDbContext.customer.Add(objcustomer);
@@ -55,6 +57,7 @@ namespace backend.Controllers
 
         [HttpPatch]
         [Route("Updatecustomer/{accountnum}")]
+        [AllowAnonymous]
         public async Task<customer> Updatecustomer(customer objcustomer)
         {
             _customerRepo.UpdateCustomer(objcustomer);
@@ -66,6 +69,7 @@ namespace backend.Controllers
 
         [HttpDelete]
         [Route("Deletecustomer/{accountnum}")]
+        [AllowAnonymous]
         public bool Deletecustomer(int accountnum)
         {
             return _customerRepo.DeleteCustomer(accountnum);

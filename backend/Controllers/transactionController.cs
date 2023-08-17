@@ -34,12 +34,18 @@ namespace backend.Controllers
 
             [HttpPost]
             [Route("Addtransaction")]
-            public async Task<transaction> Addstudent(transaction objtransaction)
+        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
+            public async Task<IActionResult> Addstudent(transaction objtransaction)
             {
             //_transactionDbContext.transaction.Add(objtransaction);
             //await _transactionDbContext.SaveChangesAsync();
-            _transactionRepo.Inserttransaction(objtransaction);
-                return objtransaction;
+            int validity = _transactionRepo.Inserttransaction(objtransaction);
+            if (validity == 0)
+            {
+                return BadRequest();
+            }
+
+             return Ok(objtransaction);
             }
 
             [HttpPatch]

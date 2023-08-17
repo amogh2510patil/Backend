@@ -38,7 +38,7 @@ namespace backend.Migrations
                 {
                     transactionNo = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    amount = table.Column<int>(type: "int", nullable: true),
+                    amount = table.Column<int>(type: "int", nullable: false),
                     type = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     dateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     accountnum = table.Column<int>(type: "int", nullable: false)
@@ -46,28 +46,17 @@ namespace backend.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_transaction", x => x.transactionNo);
-                    table.ForeignKey(
-                        name: "FK_transaction_customer_accountnum",
-                        column: x => x.accountnum,
-                        principalTable: "customer",
-                        principalColumn: "accountnum",
-                        onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_transaction_accountnum",
-                table: "transaction",
-                column: "accountnum");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "transaction");
+                name: "customer");
 
             migrationBuilder.DropTable(
-                name: "customer");
+                name: "transaction");
         }
     }
 }

@@ -8,12 +8,12 @@ namespace backend.Models
         [Key]
         public int transactionNo { get; set; }
 
-        public int? amount { get; set; }
+        public int amount { get; set; }
         public string type { get; set; }
         public DateTime dateTime { get; set; }
 
         [ForeignKey("customer")]
         public int accountnum { get; set; }
-        public virtual customer? customer { get; set; }
+        //public virtual customer? customer { get; set; }
     }
 }
