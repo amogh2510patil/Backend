@@ -61,14 +61,19 @@ namespace backend.Models
                 }
                 if (transaction.type == "W")
                 {
+                    transaction.currency = "";
+                    transaction.recipient = 0;
                     customer.balance -= transaction.amount;
                 }
                 else if(transaction.type == "D")
                 {
+                    transaction.currency = "";
+                    transaction.recipient = 0;
                     customer.balance += transaction.amount;
                 }
                 else if(transaction.type == "F")
                 {
+                    transaction.currency = "";
                     customer rec = db.customer.Find(transaction.recipient);
                         if(rec == null)
                     {
@@ -82,7 +87,8 @@ namespace backend.Models
                 }
                 else if(transaction.type == "CED")
                 {
-                    if(transaction.currency == "Dollar")
+                    transaction.recipient = 0;
+                    if (transaction.currency == "Dollar")
                     {
                         customer.balance += (80 * transaction.amount);
                     }
@@ -101,6 +107,7 @@ namespace backend.Models
                 }
                 else if (transaction.type == "CEW")
                 {
+                    transaction.recipient = 0;
                     if (transaction.currency == "Dollar")
                     {
                         customer.balance -= (80 * transaction.amount);

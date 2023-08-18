@@ -9,7 +9,7 @@ namespace backend.Controllers
     [Route("api/[controller]")]
     [ApiController]
 
-    //[Authorize]
+    [Authorize]
     public class customerController : ControllerBase
     {
         private readonly customerDbContext _customerDbContext;
