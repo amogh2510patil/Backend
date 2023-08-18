@@ -8,9 +8,10 @@ namespace backend.Models
         [Key]
         public int transactionNo { get; set; }
 
-        public int amount { get; set; }
+        public double amount { get; set; }
         public string type { get; set; }
         public DateTime dateTime { get; set; }
+        public string currency { get; set; }
 
         [ForeignKey("customer")]
         public int accountnum { get; set; }

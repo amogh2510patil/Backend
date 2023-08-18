@@ -80,6 +80,44 @@ namespace backend.Models
                         rec.balance += transaction.amount;
                     }
                 }
+                else if(transaction.type == "CED")
+                {
+                    if(transaction.currency == "Dollar")
+                    {
+                        customer.balance += (80 * transaction.amount);
+                    }
+                    else if(transaction.currency == "Pound")
+                    {
+                        customer.balance += (105 * transaction.amount);
+                    }
+                    else if(transaction.currency == "Euro")
+                    {
+                        customer.balance += (90 * transaction.amount);
+                    }
+                    else if(transaction.currency == "Yen")
+                    {
+                        customer.balance += ( 0.5 * transaction.amount);
+                    }
+                }
+                else if (transaction.type == "CEW")
+                {
+                    if (transaction.currency == "Dollar")
+                    {
+                        customer.balance -= (80 * transaction.amount);
+                    }
+                    else if (transaction.currency == "Pound")
+                    {
+                        customer.balance -= (105 * transaction.amount);
+                    }
+                    else if (transaction.currency == "Euro")
+                    {
+                        customer.balance -= (90 * transaction.amount);
+                    }
+                    else if (transaction.currency == "Yen")
+                    {
+                        customer.balance -= (0.5 * transaction.amount);
+                    }
+                }
                 else { return 0; }                                                                                                                                                                                                                                                                                    
                 //transaction.customer = customer;
                     db.transaction.Add(transaction);                                                                                                                                                                                                                                                    

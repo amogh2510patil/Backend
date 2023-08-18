@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using backend.Models;
 
@@ -11,9 +12,11 @@ using backend.Models;
 namespace backend.Migrations
 {
     [DbContext(typeof(customerDbContext))]
-    partial class customerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230818033805_init")]
+    partial class init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,8 +40,8 @@ namespace backend.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("balance")
-                        .HasColumnType("float");
+                    b.Property<int>("balance")
+                        .HasColumnType("int");
 
                     b.Property<int>("cardnumber")
                         .HasColumnType("int");
@@ -78,12 +81,8 @@ namespace backend.Migrations
                     b.Property<int>("accountnum")
                         .HasColumnType("int");
 
-                    b.Property<double>("amount")
-                        .HasColumnType("float");
-
-                    b.Property<string>("currency")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("amount")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("dateTime")
                         .HasColumnType("datetime2");

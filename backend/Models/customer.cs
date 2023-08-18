@@ -29,7 +29,7 @@ namespace backend.Models
         [Required]
         public int accountnum { get; set; }
         [Required]
-        public int balance { get; set; }
+        public double balance { get; set; }
 
         //public virtual List<transaction>? transactions { get; set; }
 
