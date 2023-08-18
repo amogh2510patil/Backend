@@ -12,8 +12,8 @@ using backend.Models;
 namespace backend.Migrations
 {
     [DbContext(typeof(customerDbContext))]
-    [Migration("20230818042617_abhaymig")]
-    partial class abhaymig
+    [Migration("20230818044310_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,8 +33,8 @@ namespace backend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("accountnum"));
 
-                    b.Property<bool>("accounttype")
-                        .HasColumnType("bit");
+                    b.Property<int>("accounttype")
+                        .HasColumnType("int");
 
                     b.Property<string>("address")
                         .IsRequired()
