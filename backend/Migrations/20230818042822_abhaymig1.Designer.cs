@@ -12,8 +12,8 @@ using backend.Models;
 namespace backend.Migrations
 {
     [DbContext(typeof(customerDbContext))]
-    [Migration("20230818033805_init")]
-    partial class init
+    [Migration("20230818042822_abhaymig1")]
+    partial class abhaymig1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,15 +33,15 @@ namespace backend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("accountnum"));
 
-                    b.Property<bool>("accounttype")
-                        .HasColumnType("bit");
+                    b.Property<int>("accounttype")
+                        .HasColumnType("int");
 
                     b.Property<string>("address")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("balance")
-                        .HasColumnType("int");
+                    b.Property<double>("balance")
+                        .HasColumnType("float");
 
                     b.Property<int>("cardnumber")
                         .HasColumnType("int");
@@ -81,8 +81,12 @@ namespace backend.Migrations
                     b.Property<int>("accountnum")
                         .HasColumnType("int");
 
-                    b.Property<int>("amount")
-                        .HasColumnType("int");
+                    b.Property<double>("amount")
+                        .HasColumnType("float");
+
+                    b.Property<string>("currency")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("dateTime")
                         .HasColumnType("datetime2");

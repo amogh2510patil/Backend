@@ -30,8 +30,8 @@ namespace backend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("accountnum"));
 
-                    b.Property<bool>("accounttype")
-                        .HasColumnType("bit");
+                    b.Property<int>("accounttype")
+                        .HasColumnType("int");
 
                     b.Property<string>("address")
                         .IsRequired()

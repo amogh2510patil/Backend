@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace backend.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class abhaymig : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -25,7 +25,7 @@ namespace backend.Migrations
                     pinnum = table.Column<int>(type: "int", nullable: false),
                     city = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     accounttype = table.Column<bool>(type: "bit", nullable: false),
-                    balance = table.Column<int>(type: "int", nullable: false)
+                    balance = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -38,9 +38,10 @@ namespace backend.Migrations
                 {
                     transactionNo = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    amount = table.Column<int>(type: "int", nullable: false),
+                    amount = table.Column<double>(type: "float", nullable: false),
                     type = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     dateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    currency = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     accountnum = table.Column<int>(type: "int", nullable: false),
                     recipient = table.Column<int>(type: "int", nullable: true)
                 },

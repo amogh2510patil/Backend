@@ -8,9 +8,13 @@ namespace backend.Models
         [Key]
         public int transactionNo { get; set; }
 
+        [Required]
         public double amount { get; set; }
+        [Required(ErrorMessage="Pls enter fund transfer type")]
         public string type { get; set; }
         public DateTime dateTime { get; set; }
+
+        [Required(ErrorMessage ="Pls enter the currency type")]
         public string currency { get; set; }
 
         [ForeignKey("customer")]
