@@ -36,7 +36,7 @@ namespace backend.Controllers
 
 
         [HttpGet]
-        [Route("GetStatement/{accNo}")]
+        [Route("GetStatement/{accNo}/{startDate}/{endDate}")]
         public async Task<IEnumerable<transaction>> GetStatement(int accNo,DateTime startDate, DateTime endDate)
         {
 
