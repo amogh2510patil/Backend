@@ -28,8 +28,17 @@ namespace backend.Models
                 return transactionList;
             }
             }
+        public List<transaction> GetStatement(int accNo,DateTime startDate, DateTime endDate)
+        {
+            //using (var db = new transactionDbContext())
+            {
+                List<transaction> transactionList = new List<transaction>();
+                transactionList = db.transaction.Where(t => (t.accountnum == accNo || t.recipient == accNo) && (t.dateTime>=startDate && t.dateTime<=endDate)).ToList();
+                return transactionList;
+            }
+        }
 
-            public bool Deletetransaction(int transactionnum)
+        public bool Deletetransaction(int transactionnum)
             {
                 //using (var db = new transactionDbContext())
                 {
@@ -55,6 +64,7 @@ namespace backend.Models
                 //using (var db = new transactionDbContext())
                 {
                 customer customer = db.customer.Find(transaction.accountnum);
+                transaction.dateTime = DateTime.Now;
                 if(customer == null)
                 {
                     return 0;

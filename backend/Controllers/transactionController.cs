@@ -1,4 +1,5 @@
 ﻿using backend.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,6 +8,7 @@ namespace backend.Controllers
 
     [Route("api/[controller]")]
     [ApiController]
+    //[Authorize]
     public class transactionController : Controller
     {
             private readonly customerDbContext _transactionDbContext;
@@ -32,7 +34,19 @@ namespace backend.Controllers
 
             }
 
-            [HttpPost]
+
+        [HttpGet]
+        [Route("GetStatement/{accNo}")]
+        public async Task<IEnumerable<transaction>> GetStatement(int accNo,DateTime startDate, DateTime endDate)
+        {
+
+            //  return cus;
+            List<transaction> transactions = _transactionRepo.GetStatement(accNo,startDate,endDate);
+            return transactions;
+
+        }
+
+        [HttpPost]
             [Route("Addtransaction")]
         //[ProducesResponseType(StatusCodes.Status400BadRequest)]
             public async Task<IActionResult> Addtransaction(transaction objtransaction)
@@ -42,7 +56,7 @@ namespace backend.Controllers
             int validity = _transactionRepo.Inserttransaction(objtransaction);
             if (validity == 0)
             {
-                return BadRequest();
+                return BadRequest("Invalid Customer");
             }
 
              return Ok(objtransaction);
