@@ -9,7 +9,7 @@ namespace backend.Controllers
     [Route("api/[controller]")]
     [ApiController]
 
-    [Authorize]
+    //[Authorize]
     public class customerController : ControllerBase
     {
         private readonly customerDbContext _customerDbContext;
@@ -53,6 +53,14 @@ namespace backend.Controllers
             //await _customerDbContext.SaveChangesAsync();
             _customerRepo.InsertCustomer(objcustomer);
             return objcustomer;
+        }
+
+        [HttpPatch]
+
+        [Route("SetPin/{accNo}/{pin}")]
+        public bool SetPin(int accNo, int pin)
+        {
+            return _customerRepo.SetPin(accNo, pin);
         }
 
         [HttpPatch]

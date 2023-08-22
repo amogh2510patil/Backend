@@ -82,5 +82,18 @@ namespace backend.Models
                 return customerup;
             }
         }
+
+        public bool SetPin(int accNo,int pin)
+        {
+            var customer=db.customer.Find(accNo);
+            if (customer != null)
+            {
+                customer.pinnum = pin;
+                db.Entry(customer).State= EntityState.Modified;
+                db.SaveChangesAsync();
+                return true;
+            }
+            else { return false; }
+        }
     }
 }
