@@ -20,6 +20,11 @@ namespace backend.Controllers
         public AuthController(IConfiguration configuration)
         {
             _configuration = configuration;
+            //user.Username = "wells";
+            //user.Role = "Admin";
+            //CreatePasswordHash("pass", out byte[] passwordHash2, out byte[] passwordSalt2);
+            //user.PasswordSalt = passwordSalt2;  
+            //user.PasswordHash= passwordHash2;
         }
 
         [HttpPost("register")]
@@ -28,6 +33,7 @@ namespace backend.Controllers
             CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
 
             user.Username = request.Username;
+            user.Role = request.Role;
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
 
@@ -49,7 +55,7 @@ namespace backend.Controllers
 
             string token = CreateToken(user); 
 
-            return Ok(token);
+            return Ok(new { token = token, role = user.Role });
         }
 
         private string CreateToken(User user)
@@ -57,7 +63,7 @@ namespace backend.Controllers
             List<Claim> claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, user.Username),
-                new Claim(ClaimTypes.Role, "Admin")
+                new Claim(ClaimTypes.Role, user.Role)
             };
 
             var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(

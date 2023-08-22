@@ -25,7 +25,7 @@ namespace backend.Controllers
 
 
         [HttpGet]
-        [Route("GetAll")]
+        [Route("GetAll"),Authorize(Roles="Admin")]
         public async Task<IEnumerable<customer>> GetAll()
         {
 
