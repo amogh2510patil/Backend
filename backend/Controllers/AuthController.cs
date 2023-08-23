@@ -14,12 +14,14 @@ namespace backend.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        public static User user = new User();
+        private readonly customerDbContext _customerDbContext;
+        
         private readonly IConfiguration _configuration;
 
-        public AuthController(IConfiguration configuration)
+        public AuthController(IConfiguration configuration, customerDbContext customerDbContext)
         {
             _configuration = configuration;
+            _customerDbContext = customerDbContext;
             //user.Username = "wells";
             //user.Role = "Admin";
             //CreatePasswordHash("pass", out byte[] passwordHash2, out byte[] passwordSalt2);
@@ -31,23 +33,36 @@ namespace backend.Controllers
         public async Task<ActionResult<User>> Register(UserDto request)
         {
             CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
-
-            user.Username = request.Username;
+            User user = new User();
+         user.Username = request.Username;
             user.Role = request.Role;
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
+            user.accNo=request.accNo;
 
+            if (user.Role == "User")
+            {
+/*                var uname = _customerDbContext.customer.Find(user.accNo);
+                var temp = _customerDbContext.User.Find(uname);*/
+                if (_customerDbContext.customer.Find(user.accNo)==null /*|| temp==null*/)
+                {
+                    return BadRequest("Customer Does Not Exist");
+                }
+
+            }
+            _customerDbContext.User.Add(user);
+            _customerDbContext.SaveChanges();
             return Ok(user);
         }
 
         [HttpPost("login")]
         public async Task<ActionResult<string>> Login(UserDto request)
         {
-            if (user.Username != request.Username)
+            if (_customerDbContext.User.Find(request.Username)==null)
             {
                 return BadRequest("User not found.");
             }
-
+            User user = _customerDbContext.User.Find(request.Username);
             if (!VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
             {
                 return BadRequest("Wrong password.");
@@ -55,7 +70,7 @@ namespace backend.Controllers
 
             string token = CreateToken(user); 
 
-            return Ok(new { token = token, role = user.Role });
+            return Ok(new { token = token, role = user.Role, accNo=user.accNo});
         }
 
         private string CreateToken(User user)

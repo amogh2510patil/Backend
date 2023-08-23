@@ -49,6 +49,22 @@ namespace backend.Migrations
                 {
                     table.PrimaryKey("PK_transaction", x => x.transactionNo);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "User",
+                columns: table => new
+                {
+                    Username = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    accNo = table.Column<int>(type: "int", nullable: false),
+                    Role = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PasswordHash = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    PasswordSalt = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_User", x => x.Username);
+                });
         }
 
         /// <inheritdoc />
@@ -59,6 +75,9 @@ namespace backend.Migrations
 
             migrationBuilder.DropTable(
                 name: "transaction");
+
+            migrationBuilder.DropTable(
+                name: "User");
         }
     }
 }

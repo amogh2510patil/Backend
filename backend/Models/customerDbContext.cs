@@ -11,7 +11,7 @@ namespace backend.Models
         public customerDbContext(DbContextOptions<customerDbContext> options) : base(options)
         {
         }
-
+        public DbSet<User> User { get; set; }
         public DbSet<customer> customer { get; set; }
         public DbSet<transaction> transaction { get; set; }
 
