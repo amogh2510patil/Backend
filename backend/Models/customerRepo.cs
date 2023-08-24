@@ -39,6 +39,7 @@ namespace backend.Models
 
         }
 
+
         public bool DeleteCustomer(int accNo)
         {
             //using (var db = new customerDbContext())
@@ -49,6 +50,12 @@ namespace backend.Models
                 {
                     a = true;
                     db.Entry(customer).State = EntityState.Deleted;
+                    var user = db.User.Where(u => u.accNo == customer.accountnum && u.Role == "User").FirstOrDefault();
+                    if (user != null)
+                    {
+                        db.Entry(user).State = EntityState.Deleted;
+                    }
+
                     db.SaveChanges();
 
                 }

@@ -81,21 +81,6 @@ namespace backend.Controllers
         public bool Deletecustomer(int accountnum)
         {
             return _customerRepo.DeleteCustomer(accountnum);
-
-            bool a = false;
-            var customer = _customerDbContext.customer.Find(accountnum);
-            if (customer != null)
-            {
-                a = true;
-                _customerDbContext.Entry(customer).State = EntityState.Deleted;
-                _customerDbContext.SaveChanges();
-
-            }
-            else
-            {
-                a = false;
-            }
-            return a;
         }
     }
 }

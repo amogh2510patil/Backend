@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -48,6 +49,9 @@ namespace backend.Controllers
                 {
                     return BadRequest("Customer Does Not Exist");
                 }
+                if(_customerDbContext.User.Where(u=> u.accNo == user.accNo).Any()) {
+                    return BadRequest("Customer already registered");
+                }
 
             }
             _customerDbContext.User.Add(user);
@@ -67,11 +71,65 @@ namespace backend.Controllers
             {
                 return BadRequest("Wrong password.");
             }
+            if(user.Role == "User" && user.Status == "Deactivate")
+            {
+                return BadRequest("User Deactivated, Please contact Admin");
+            }
 
             string token = CreateToken(user); 
 
             return Ok(new { token = token, role = user.Role, accNo=user.accNo});
         }
+
+        [HttpPost]
+        [Route("Status/{accountnum}")]
+        /*[Authorize(Roles="Admin")]*/
+        public async Task<ActionResult<string>> Status(int accountnum)
+        {
+             var user = _customerDbContext.User.Where(u => u.accNo == accountnum && u.Role=="User").FirstOrDefault();
+            if (user == null)
+            {
+                return BadRequest("User Not Found");
+            }
+            else
+            {
+                if (user.Status == "Activate")
+                {
+                    user.Status = "Deactivate";
+                }
+                else
+                {
+                    user.Status = "Activate";
+                }
+               
+                _customerDbContext.Entry(user).State = EntityState.Modified;
+                _customerDbContext.SaveChangesAsync();
+                return Ok(user);
+            }
+
+        }
+
+        [HttpGet]
+        [Route("GetAll"), Authorize(Roles = "Admin")]
+        public async Task<IEnumerable<User>> GetAll()
+        {
+
+
+            List<User> userList = _customerDbContext.User.Where(u => u.Role == "User").ToList();
+            return userList;
+
+        }
+        [HttpGet]
+        [Route("Getuser/{accNo}")]
+        [AllowAnonymous]
+        public User Getuser(int accNo)
+        {
+
+            var user = _customerDbContext.User.Where(u => u.accNo == accNo && u.Role == "User").FirstOrDefault();
+            return user;
+
+        }
+
 
         private string CreateToken(User user)
         {
