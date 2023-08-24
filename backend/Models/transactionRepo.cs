@@ -71,6 +71,7 @@ namespace backend.Models
                 }
                 if (transaction.type == "W")
                 {
+                    if (transaction.amount > customer.balance) { return 0; }
                     transaction.currency = "";
                     transaction.recipient = 0;
                     customer.balance -= transaction.amount;
@@ -83,6 +84,7 @@ namespace backend.Models
                 }
                 else if(transaction.type == "F")
                 {
+                    if (transaction.amount > customer.balance) { return 0; }
                     transaction.currency = "";
                     customer rec = db.customer.Find(transaction.recipient);
                         if(rec == null)
@@ -120,18 +122,22 @@ namespace backend.Models
                     transaction.recipient = 0;
                     if (transaction.currency == "Dollar")
                     {
+                        if ((80 * transaction.amount) > customer.balance) { return 0; }
                         customer.balance -= (80 * transaction.amount);
                     }
                     else if (transaction.currency == "Pound")
                     {
+                        if ((105 * transaction.amount) > customer.balance) { return 0; }
                         customer.balance -= (105 * transaction.amount);
                     }
                     else if (transaction.currency == "Euro")
                     {
+                        if ((90 * transaction.amount) > customer.balance) { return 0; }
                         customer.balance -= (90 * transaction.amount);
                     }
                     else if (transaction.currency == "Yen")
                     {
+                        if ((0.5 * transaction.amount) > customer.balance) { return 0; }
                         customer.balance -= (0.5 * transaction.amount);
                     }
                 }
