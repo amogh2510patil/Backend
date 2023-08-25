@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Data.Common;
 
 namespace backend.Controllers
 {
@@ -61,22 +62,88 @@ namespace backend.Controllers
 
              return Ok(objtransaction);
             }
-/*
+
         [HttpPost]
-        [Route("FundTransfer")]
+        [Route("AddCheque")]
         //[ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> FundTransfer(transaction objtransaction)
+        public async Task<IActionResult> AddCheque(cheque objcheque)
         {
             //_transactionDbContext.transaction.Add(objtransaction);
             //await _transactionDbContext.SaveChangesAsync();
-            int validity = _transactionRepo.FundTransfer(objtransaction);
+            int validity = _transactionRepo.InsertCheque(objcheque);
             if (validity == 0)
             {
-                return BadRequest();
+                return BadRequest("Invalid Customer");
             }
 
-            return Ok(objtransaction);
-        }*/
+            return Ok(objcheque);
+        }
+
+        [HttpGet]
+        [Route("GetCheques/{accNo}")]
+        public async Task<IEnumerable<cheque>> GetCheques(int accNo)
+        {
+
+            //  return cus;
+            List<cheque> cheques = _transactionRepo.GetCheque(accNo);
+            return cheques;
+
+        }
+
+        [HttpPost]
+        [Route("ApproveCheque")]
+        public async Task<ActionResult<string>> Status(int cno,int req)
+        {
+            cheque chq = _transactionDbContext.cheque.Find(cno);
+            if (chq == null)
+            {
+                return BadRequest("User Not Found");
+            }
+            else
+            {
+                if (req == 1)
+                {
+              
+                    transaction objtransaction = new transaction
+                    {
+                        accountnum = chq.accno,
+                        amount = chq.amount,
+                        type = "Chq",
+                        dateTime = DateTime.Now,
+                        currency = "",
+                        recipient = 0
+                    };
+                    int validity = _transactionRepo.Inserttransaction(objtransaction);
+                    chq.status = "Approved";
+                }
+                else
+                {
+                    chq.status = "Rejected";
+                }
+
+                _transactionDbContext.Entry(chq).State = EntityState.Modified;
+                _transactionDbContext.SaveChangesAsync();
+                return Ok(chq);
+            }
+
+        }
+
+        /*
+                [HttpPost]
+                [Route("FundTransfer")]
+                //[ProducesResponseType(StatusCodes.Status400BadRequest)]
+                public async Task<IActionResult> FundTransfer(transaction objtransaction)
+                {
+                    //_transactionDbContext.transaction.Add(objtransaction);
+                    //await _transactionDbContext.SaveChangesAsync();
+                    int validity = _transactionRepo.FundTransfer(objtransaction);
+                    if (validity == 0)
+                    {
+                        return BadRequest();
+                    }
+
+                    return Ok(objtransaction);
+                }*/
 
         [HttpPatch]
             [Route("Updatetransaction/{transactionnum}")]

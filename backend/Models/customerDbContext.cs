@@ -14,6 +14,7 @@ namespace backend.Models
         public DbSet<User> User { get; set; }
         public DbSet<customer> customer { get; set; }
         public DbSet<transaction> transaction { get; set; }
+        public DbSet<cheque> cheque { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

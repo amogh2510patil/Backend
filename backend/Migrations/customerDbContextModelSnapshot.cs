@@ -51,6 +51,29 @@ namespace backend.Migrations
                     b.ToTable("User");
                 });
 
+            modelBuilder.Entity("backend.Models.cheque", b =>
+                {
+                    b.Property<int>("cno")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("cno"));
+
+                    b.Property<int>("accno")
+                        .HasColumnType("int");
+
+                    b.Property<int>("amount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("cno");
+
+                    b.ToTable("cheque");
+                });
+
             modelBuilder.Entity("backend.Models.customer", b =>
                 {
                     b.Property<int>("accountnum")

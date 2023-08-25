@@ -8,6 +8,7 @@ namespace backend.Models
             bool Deletetransaction(int accNo);
             int Inserttransaction(transaction transaction);
             int Updatetransaction(transaction transaction);
+        int InsertCheque(cheque cheque);
         }
 
         public class transactionRepo : Itransaction
@@ -28,6 +29,16 @@ namespace backend.Models
                 return transactionList;
             }
             }
+
+        public List<cheque> GetCheque(int accNo)
+        {
+            //using (var db = new transactionDbContext())
+            {
+                List<cheque> chequelist = new List<cheque>();
+                chequelist = db.cheque.Where(c => c.accno == accNo).ToList();
+                return chequelist;
+            }
+        }
         public List<transaction> GetStatement(int accNo,DateTime startDate, DateTime endDate)
         {
             //using (var db = new transactionDbContext())
@@ -58,6 +69,15 @@ namespace backend.Models
                     return a;
                 }
             }
+        public int InsertCheque(cheque cheque)
+        {
+            customer customer = db.customer.Find(cheque.accno);
+            db.cheque.Add(cheque);
+
+            db.SaveChangesAsync();
+            return 1;
+            //return 0;
+        }
 
             public int Inserttransaction(transaction transaction)
             {
@@ -76,7 +96,7 @@ namespace backend.Models
                     transaction.recipient = 0;
                     customer.balance -= transaction.amount;
                 }
-                else if(transaction.type == "D")
+                else if(transaction.type == "D" || transaction.type == "Chq")
                 {
                     transaction.currency = "";
                     transaction.recipient = 0;
