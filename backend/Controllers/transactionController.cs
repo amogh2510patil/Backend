@@ -65,6 +65,7 @@ namespace backend.Controllers
 
         [HttpPost]
         [Route("AddCheque")]
+        [AllowAnonymous]
         //[ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> AddCheque(cheque objcheque)
         {
@@ -75,7 +76,7 @@ namespace backend.Controllers
             {
                 return BadRequest("Invalid Customer");
             }
-
+            objcheque.status = "InProgress";
             return Ok(objcheque);
         }
 
@@ -108,7 +109,7 @@ namespace backend.Controllers
                     {
                         accountnum = chq.accno,
                         amount = chq.amount,
-                        type = "Chq",
+                        type = "Chq "+chq.cno,
                         dateTime = DateTime.Now,
                         currency = "",
                         recipient = 0

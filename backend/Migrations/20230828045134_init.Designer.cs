@@ -12,8 +12,8 @@ using backend.Models;
 namespace backend.Migrations
 {
     [DbContext(typeof(customerDbContext))]
-    [Migration("20230825094829_chq")]
-    partial class chq
+    [Migration("20230828045134_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

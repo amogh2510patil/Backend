@@ -72,11 +72,16 @@ namespace backend.Models
         public int InsertCheque(cheque cheque)
         {
             customer customer = db.customer.Find(cheque.accno);
-            db.cheque.Add(cheque);
+            if (customer != null)
+            {
+                cheque.status = "InProgress";
+                db.cheque.Add(cheque);
 
-            db.SaveChangesAsync();
-            return 1;
-            //return 0;
+                db.SaveChangesAsync();
+                return 1;
+            }
+            
+            return 0;
         }
 
             public int Inserttransaction(transaction transaction)
@@ -92,13 +97,22 @@ namespace backend.Models
                 if (transaction.type == "W")
                 {
                     if (transaction.amount > customer.balance) { return 0; }
+                    transaction.type = "Withdraw";
                     transaction.currency = "";
                     transaction.recipient = 0;
                     customer.balance -= transaction.amount;
                 }
-                else if(transaction.type == "D" || transaction.type == "Chq")
+                else if(transaction.type == "D")
                 {
                     transaction.currency = "";
+                    transaction.type = "Deposit";
+                    transaction.recipient = 0;
+                    customer.balance += transaction.amount;
+                }
+                else if (transaction.type.StartsWith("Chq"))
+                {
+                    transaction.currency = "";
+                    transaction.type = "Cheque Deposit";
                     transaction.recipient = 0;
                     customer.balance += transaction.amount;
                 }
@@ -106,6 +120,8 @@ namespace backend.Models
                 {
                     if (transaction.amount > customer.balance) { return 0; }
                     transaction.currency = "";
+                    transaction.type = "Fund Transfer";
+
                     customer rec = db.customer.Find(transaction.recipient);
                         if(rec == null)
                     {
@@ -120,6 +136,8 @@ namespace backend.Models
                 else if(transaction.type == "CED")
                 {
                     transaction.recipient = 0;
+                    transaction.type = "Currency Deposit";
+
                     if (transaction.currency == "Dollar")
                     {
                         customer.balance += (80 * transaction.amount);
@@ -140,6 +158,8 @@ namespace backend.Models
                 else if (transaction.type == "CEW")
                 {
                     transaction.recipient = 0;
+                    transaction.type = "Currency Withdraw";
+
                     if (transaction.currency == "Dollar")
                     {
                         if ((80 * transaction.amount) > customer.balance) { return 0; }
