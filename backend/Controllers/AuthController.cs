@@ -103,7 +103,7 @@ namespace backend.Controllers
                 }
                
                 _customerDbContext.Entry(user).State = EntityState.Modified;
-                _customerDbContext.SaveChangesAsync();
+                _customerDbContext.SaveChanges();
                 return Ok(user);
             }
 

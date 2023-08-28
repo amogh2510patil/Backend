@@ -59,6 +59,9 @@ namespace backend.Controllers
             {
                 return BadRequest("Invalid Customer");
             }
+            else if(validity == -1) {
+                return BadRequest("Insufficient Balance");
+            }
 
              return Ok(objtransaction);
             }

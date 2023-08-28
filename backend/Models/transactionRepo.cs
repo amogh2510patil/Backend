@@ -123,7 +123,7 @@ namespace backend.Models
                 }
                 if (transaction.type == "W")
                 {
-                    if (transaction.amount > customer.balance) { return 0; }
+                    if (transaction.amount > customer.balance) { return -1; }
                     transaction.type = "Withdraw";
                     transaction.currency = "";
                     transaction.recipient = 0;
@@ -145,7 +145,7 @@ namespace backend.Models
                 }
                 else if(transaction.type == "F")
                 {
-                    if (transaction.amount > customer.balance) { return 0; }
+                    if (transaction.amount > customer.balance) { return -1; }
                     transaction.currency = "";
                     transaction.type = "Fund Transfer";
 
@@ -189,7 +189,7 @@ namespace backend.Models
 
                     if (transaction.currency == "Dollar")
                     {
-                        if ((80 * transaction.amount) > customer.balance) { return 0; }
+                        if ((80 * transaction.amount) > customer.balance) { return -1; }
                         customer.balance -= (80 * transaction.amount);
                     }
                     else if (transaction.currency == "Pound")
@@ -212,7 +212,7 @@ namespace backend.Models
                 //transaction.customer = customer;
                     db.transaction.Add(transaction);                                                                                                                                                                                                                                                    
 
-                    db.SaveChangesAsync();
+                    db.SaveChanges();
                     return 1;
                 }
 
