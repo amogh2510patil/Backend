@@ -15,8 +15,7 @@ namespace backend.Migrations
                 name: "cheque",
                 columns: table => new
                 {
-                    cno = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    cno = table.Column<int>(type: "int", nullable: false),
                     accno = table.Column<int>(type: "int", nullable: false),
                     status = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     amount = table.Column<int>(type: "int", nullable: false)
@@ -30,8 +29,7 @@ namespace backend.Migrations
                 name: "customer",
                 columns: table => new
                 {
-                    accountnum = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    accountnum = table.Column<int>(type: "int", nullable: false),
                     name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     email = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -51,8 +49,7 @@ namespace backend.Migrations
                 name: "transaction",
                 columns: table => new
                 {
-                    transactionNo = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    transactionNo = table.Column<int>(type: "int", nullable: false),
                     amount = table.Column<double>(type: "float", nullable: false),
                     type = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     dateTime = table.Column<DateTime>(type: "datetime2", nullable: false),

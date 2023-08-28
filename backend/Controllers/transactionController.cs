@@ -115,7 +115,11 @@ namespace backend.Controllers
                         recipient = 0
                     };
                     int validity = _transactionRepo.Inserttransaction(objtransaction);
-                    chq.status = "Approved";
+                    if (validity == 0)
+                    {
+                        return BadRequest("Invalid Customer");
+                    }
+                chq.status = "Approved";
                 }
                 else
                 {

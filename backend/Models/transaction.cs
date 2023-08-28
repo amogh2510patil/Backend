@@ -6,6 +6,7 @@ namespace backend.Models
     public class transaction
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int transactionNo { get; set; }
 
         [Required]

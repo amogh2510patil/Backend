@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 namespace backend.Models
 {
@@ -69,9 +70,22 @@ namespace backend.Models
 
         public int InsertCustomer(customer customer)
         {
+            Random rnd=new Random();
+            bool uni = true;
+            int num = 100000;
+            while (uni)
+            {
+                num = rnd.Next(100000, 999999);
+                customer cust = db.customer.Find(num);
+                if (cust == null)
+                {
+                    uni=false;
+                }
+            }
+            
             //using (var db = new customerDbContext())
             {
-
+                customer.accountnum = num;
                 db.customer.Add(customer);
 
                 db.SaveChangesAsync();

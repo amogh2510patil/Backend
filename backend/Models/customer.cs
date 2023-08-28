@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace backend.Models
 {
@@ -27,9 +28,9 @@ namespace backend.Models
         public int accounttype { get; set; }
 
         [Key]
-        [Required]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        //[MinLength(8)]
         //[RegularExpression("[0-9][0-9]{7}",ErrorMessage ="Pls enter the 12-digit account number")]
-
         public int accountnum { get; set; }
         [Required(ErrorMessage = "Invalid Amount")]
         public double balance { get; set; }

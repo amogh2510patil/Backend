@@ -71,6 +71,19 @@ namespace backend.Models
             }
         public int InsertCheque(cheque cheque)
         {
+            Random rnd = new Random();
+            bool uni = true;
+            int num = 1000000;
+            while (uni)
+            {
+                num = rnd.Next(1000000, 9999999);
+                cheque chq = db.cheque.Find(num);
+                if (chq == null)
+                {
+                    uni = false;
+                }
+            }
+            cheque.cno = num;
             customer customer = db.customer.Find(cheque.accno);
             if (customer != null)
             {
@@ -86,8 +99,22 @@ namespace backend.Models
 
             public int Inserttransaction(transaction transaction)
             {
-                //using (var db = new transactionDbContext())
+            //using (var db = new transactionDbContext())
+                Random rnd = new Random();
+                bool uni = true;
+                int num = 100000000;
+                while (uni)
                 {
+                    num = rnd.Next(100000000, 999999999);
+                    transaction trans = db.transaction.Find(num);
+                    if (trans == null)
+                    {
+                        uni = false;
+                    }
+                }
+                transaction.transactionNo = num;
+
+            {
                 customer customer = db.customer.Find(transaction.accountnum);
                 transaction.dateTime = DateTime.Now;
                 if(customer == null)

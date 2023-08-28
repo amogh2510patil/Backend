@@ -54,10 +54,7 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.Models.cheque", b =>
                 {
                     b.Property<int>("cno")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("cno"));
 
                     b.Property<int>("accno")
                         .HasColumnType("int");
@@ -77,10 +74,7 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.Models.customer", b =>
                 {
                     b.Property<int>("accountnum")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("accountnum"));
 
                     b.Property<int>("accounttype")
                         .HasColumnType("int");
@@ -122,10 +116,7 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.Models.transaction", b =>
                 {
                     b.Property<int>("transactionNo")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("transactionNo"));
 
                     b.Property<int>("accountnum")
                         .HasColumnType("int");
